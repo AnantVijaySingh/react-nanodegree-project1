@@ -9,7 +9,7 @@ class Book extends Component {
         return (
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{width:'128px', height:'193px', backgroundImage:`url(${bookData.imageURL})`}}></div>
+                    <div className="book-cover" style={{width:'128px', height:'193px', backgroundSize:'cover' , backgroundRepeat: 'no-repeat' ,backgroundImage:`url(${bookData.imageLinks.thumbnail})`}}></div>
                     <div className="book-shelf-changer">
                         <select>
                             <option value="none" disabled="true">Move to...</option>
@@ -21,7 +21,7 @@ class Book extends Component {
                     </div>
                 </div>
                 <div className="book-title">{bookData.title}</div>
-                <div className="book-authors">{bookData.author}</div>
+                <div className="book-authors">{bookData.authors[0]}</div>
             </div>
         )
     }

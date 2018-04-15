@@ -13,7 +13,7 @@ class BookShelfSection extends Component {
                         {
                             books.map((book) => (
                                 <li>
-                                    <Book bookData = {book}/>
+                                    <Book key={book.title} bookData = {book}/>
                                 </li>
                             ))
                         }
