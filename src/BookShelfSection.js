@@ -3,7 +3,7 @@ import Book from './Book'
 
 class BookShelfSection extends Component {
     render() {
-        const {title,books} = this.props;
+        const {title,books,updateCategory} = this.props;
 
         return (
             <div className="bookshelf">
@@ -13,7 +13,7 @@ class BookShelfSection extends Component {
                         {
                             books.map((book) => (
                                 <li>
-                                    <Book key={book.title} bookData = {book}/>
+                                    <Book key={book.title} bookData = {book} updateCategory = {updateCategory} />
                                 </li>
                             ))
                         }
