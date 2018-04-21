@@ -7,8 +7,6 @@ class Book extends Component {
         const {bookData,updateCategory} = this.props;
         console.log(bookData);
 
-        // var options = ["none","currentlyReading","wantToRead","read"];
-
         return (
             <div className="book">
                 <div className="book-top">
@@ -31,9 +29,10 @@ class Book extends Component {
                         <select
                             name="category-selector"
                             onChange={(event) => {updateCategory(event.target.value,bookData.id)}}
+                            value={bookData.shelf}
                         >
                             <option value="none" disabled="true">Move to...</option>
-                            <option value="currentlyReading" default="true">Currently Reading</option>
+                            <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want To Read</option>
                             <option value="read">Read</option>
                             <option value="none">None</option>

@@ -11,15 +11,25 @@ class BookShelf extends Component {
             })
     };
 
-    updateState = function(booksData) {
+    updateState = (booksData) => {
         console.log(booksData);
         this.setState(() => ({reading: booksData.filter(book => book.shelf === "currentlyReading")}));
         this.setState(() => ({toRead: booksData.filter(book => book.shelf === "wantToRead")}));
         this.setState(() => ({read: booksData.filter(book => book.shelf === "read")}));
     };
 
-    updateCategory = function (category,id) {
-        console.log('testing function pipeline for updating book category',category,id)
+    updateCategory = (category,id) => {
+        // get book id and new category and pass it to the update method of the API
+        const book = {id:id};
+        BooksAPI.update(book,category)
+            .then((response) => (console.log(response)));
+
+        // call the getAll method to update the bookshelves
+        // TODO: Evaluate using splice and push to update the respective arrays to reduce API calls and number of components that are rendered
+        BooksAPI.getAll()
+            .then((books) => {
+                this.updateState(books)
+            });
     };
 
     state = {
