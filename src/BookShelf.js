@@ -44,7 +44,7 @@ class BookShelf extends Component {
                 <div>
                     <BookShelfSection title="Currently Reading" books={this.state.reading} bookShelf={"currentlyReading"} updateCategory = {this.updateCategory} />
                     <BookShelfSection title="Want To Read" books={this.state.toRead} bookShelf={"wantToRead"} updateCategory = {this.updateCategory} />
-                    <BookShelfSection title="Read" books={this.state.read} bookShelf={"read"} updateCategory = {this.updateCategory} />
+                    <BookShelfSection title="Read" books={this.state.read} bookShelf={"noShelf"} updateCategory = {this.updateCategory} />
                 </div>
             </div>
         )

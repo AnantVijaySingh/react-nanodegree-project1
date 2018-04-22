@@ -7,7 +7,6 @@ class Book extends Component {
     render() {
 
         const {bookData,updateCategory,bookShelf} = this.props;
-        console.log(bookData);
 
         return (
             <div className="book">
@@ -37,13 +36,14 @@ class Book extends Component {
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want To Read</option>
                             <option value="read">Read</option>
-                            <option value="none">None</option>
+                            <option value="noShelf">None</option>
                         </select>
 
                     </div>
                 </div>
                 <div className="book-title">{bookData.title}</div>
                 <div className="book-authors">{bookData.authors[0]}</div>
+                <div>{bookShelf}</div>
             </div>
         )
     }
