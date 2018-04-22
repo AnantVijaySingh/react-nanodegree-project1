@@ -42,9 +42,9 @@ class BookShelf extends Component {
         return (
             <div className="list-books-content">
                 <div>
-                    <BookShelfSection title="Currently Reading" books={this.state.reading} updateCategory = {this.updateCategory} />
-                    <BookShelfSection title="Want To Read" books={this.state.toRead} updateCategory = {this.updateCategory} />
-                    <BookShelfSection title="Read" books={this.state.read} updateCategory = {this.updateCategory} />
+                    <BookShelfSection title="Currently Reading" books={this.state.reading} bookShelf={"currentlyReading"} updateCategory = {this.updateCategory} />
+                    <BookShelfSection title="Want To Read" books={this.state.toRead} bookShelf={"wantToRead"} updateCategory = {this.updateCategory} />
+                    <BookShelfSection title="Read" books={this.state.read} bookShelf={"read"} updateCategory = {this.updateCategory} />
                 </div>
             </div>
         )

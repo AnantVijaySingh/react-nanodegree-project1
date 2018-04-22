@@ -1,10 +1,12 @@
+//Component that creates the UO for each individual book
+
 import React, {Component} from 'react';
 
 class Book extends Component {
 
     render() {
 
-        const {bookData,updateCategory} = this.props;
+        const {bookData,updateCategory,bookShelf} = this.props;
         console.log(bookData);
 
         return (
@@ -29,7 +31,7 @@ class Book extends Component {
                         <select
                             name="category-selector"
                             onChange={(event) => {updateCategory(event.target.value,bookData.id)}}
-                            value={bookData.shelf}
+                            value={bookShelf}
                         >
                             <option value="none" disabled="true">Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
