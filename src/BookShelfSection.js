@@ -12,8 +12,8 @@ class BookShelfSection extends Component {
                     <ol className="books-grid">
                         {
                             books.map((book) => (
-                                <li>
-                                    <Book key={book.title} bookData = {book} bookShelf = {bookShelf} updateCategory = {updateCategory} />
+                                <li key={book.title}>
+                                    <Book bookData = {book} bookShelf = {bookShelf} updateCategory = {updateCategory} />
                                 </li>
                             ))
                         }

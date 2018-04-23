@@ -10,6 +10,8 @@ class SearchBooks extends Component {
         books:[]
     };
 
+    // Create an array to get the state of books that already have a shelf
+    // This array will be used to add the correct shelf to the search results
     componentDidMount() {
         BooksAPI.getAll()
             .then((books) => {
@@ -20,72 +22,54 @@ class SearchBooks extends Component {
             })
     }
 
-
+    // As input query changes the the state is set and a call is made to the API in the callback function
     updateResults = (query) => {
-        // console.log('---New Query String---',query);
         this.setState(
             {query: query.trim()},
             () => {
-                // console.log('Callback function executed with query string as:',this.state.query);
                 this.processResults()
             }
         );
     };
 
+    // This function takes the response of the API search call and matches the results to the available shelved books to determine the correct shelf
     processResults = () => {
         let processedBookArray= [];
         let index;
-            BooksAPI.search(this.state.query)
-                .then((booksData) => {
-                    booksData.map((book) => {
-                        // console.log(book.id);
-                        // console.log('working out the find function',this.state.books.findIndex(shelfedBook => shelfedBook.id == book.id));
-                        index = this.state.books.findIndex(shelfedBook => shelfedBook.id == book.id);
-                        book.shelf = index > 0 ? this.state.books[index].shelf : "noShelf";
-                        processedBookArray.push(book)
-                    });
 
-                    this.setState(() => ({
-                        searchedBooks: processedBookArray
-                    }))
+        BooksAPI.search(this.state.query)
+            .then((booksData) => {
+            console.log('Response',booksData);
+            if (this.state.query.length !== 0 && booksData.error !== 'empty query' ) {
+                booksData.map((book) => {
+                    index = this.state.books.findIndex(shelfedBook => shelfedBook.id == book.id);
+                    book.shelf = index > 0 ? this.state.books[index].shelf : "none";
+                    processedBookArray.push(book)
                 });
-            // console.log('---API Query String---',this.state.query,' ','---API Result---', this.state.searchedBooks);
+
+                this.setState(() => ({
+                    searchedBooks: processedBookArray
+                }))
+            } else {
+                this.setState(() => ({
+                    searchedBooks: []
+                }))
+            }
+            });
     };
 
+    // This function tracks any change in category and makes a API call
     updateCategory = (category,id) => {
-        // get book id and new category and pass it to the update method of the API and update the local books and searchedBooks array
-        let index;
         const book = {id:id};
-        const shelf = category === 'noShelf' ? "none" : category;
-        BooksAPI.update(book,shelf)
+        BooksAPI.update(book,category)
             .then((response) => {
                 console.log('---Backend API updated---')
             })
-
-
-        // let index;
-        // const book = {id:id};
-        // const shelf = category === 'noShelf' ? "none" : category;
-        // BooksAPI.update(book,shelf)
-        //     .then(() => {
-        //         index = this.state.searchedBooks.findIndex(shelfedBook => shelfedBook.id === id);
-        //         this.state.searchedBooks[index].shelf = shelf;
-        //         this.setState((prevState) => ({
-        //             searchedBooks: prevState
-        //         }))}
-        //     )
-
-        // call the getAll method to update the bookshelves
-        // TESTING IF THE BOOKS WERE ADDED TO THE CORRECT CATEGORY
-        // BooksAPI.getAll()
-        //     .then((books) => {
-        //         console.log(books.length)
-        //     });
     };
 
     render() {
         const {searchedBooks} = this.state;
-
+        console.log('Books being rendered from search results',searchedBooks);
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -107,8 +91,8 @@ class SearchBooks extends Component {
                         {
                             typeof searchedBooks !== 'undefined' && (
                                 searchedBooks.map((book) => (
-                                    <li>
-                                        <Book key={book.title} bookData = {book} bookShelf={book.shelf} updateCategory = {this.updateCategory} />
+                                    <li key={book.id}>
+                                        <Book bookData = {book} bookShelf={book.shelf} updateCategory = {this.updateCategory} />
                                     </li>
                                 ))
                             )
