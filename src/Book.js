@@ -1,8 +1,14 @@
-//Component that creates the UO for each individual book
-
+//Component that creates the UI for each individual book
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class Book extends Component {
+
+    static propTypes = {
+        bookData: PropTypes.object.isRequired,
+        updateCategory: PropTypes.func.isRequired,
+        bookShelf: PropTypes.string.isRequired,
+    };
 
     render() {
 

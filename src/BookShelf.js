@@ -12,7 +12,6 @@ class BookShelf extends Component {
     };
 
     updateState = (booksData) => {
-        console.log(booksData);
         this.setState(() => ({reading: booksData.filter(book => book.shelf === "currentlyReading")}));
         this.setState(() => ({toRead: booksData.filter(book => book.shelf === "wantToRead")}));
         this.setState(() => ({read: booksData.filter(book => book.shelf === "read")}));

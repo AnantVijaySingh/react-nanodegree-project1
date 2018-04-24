@@ -15,7 +15,6 @@ class SearchBooks extends Component {
     componentDidMount() {
         BooksAPI.getAll()
             .then((books) => {
-                // console.log(books);
                 books.map((book)=> {
                     this.state.books.push({id:book.id,shelf:book.shelf})
                 })
@@ -25,7 +24,7 @@ class SearchBooks extends Component {
     // As input query changes the the state is set and a call is made to the API in the callback function
     updateResults = (query) => {
         this.setState(
-            {query: query.trim()},
+            {query: query.trimLeft()},
             () => {
                 this.processResults()
             }
@@ -39,7 +38,6 @@ class SearchBooks extends Component {
 
         BooksAPI.search(this.state.query)
             .then((booksData) => {
-            console.log('Response',booksData);
             if (this.state.query.length !== 0 && booksData.error !== 'empty query' ) {
                 booksData.map((book) => {
                     index = this.state.books.findIndex(shelfedBook => shelfedBook.id == book.id);
@@ -69,7 +67,6 @@ class SearchBooks extends Component {
 
     render() {
         const {searchedBooks} = this.state;
-        console.log('Books being rendered from search results',searchedBooks);
         return(
             <div className="search-books">
                 <div className="search-books-bar">
