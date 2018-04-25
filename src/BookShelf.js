@@ -27,7 +27,11 @@ class BookShelf extends Component {
         // TODO: Evaluate using splice and push to update the respective arrays to reduce API calls and number of components that are rendered
         BooksAPI.getAll()
             .then((books) => {
-                this.updateState(books)
+                this.setState(() => ({
+                    reading: books.filter(book => book.shelf === "currentlyReading"),
+                    toRead: books.filter(book => book.shelf === "wantToRead"),
+                    read: books.filter(book => book.shelf === "read")
+                }))
             });
     };
 
@@ -43,7 +47,7 @@ class BookShelf extends Component {
                 <div>
                     <BookShelfSection title="Currently Reading" books={this.state.reading} bookShelf={"currentlyReading"} updateCategory = {this.updateCategory} />
                     <BookShelfSection title="Want To Read" books={this.state.toRead} bookShelf={"wantToRead"} updateCategory = {this.updateCategory} />
-                    <BookShelfSection title="Read" books={this.state.read} bookShelf={"noShelf"} updateCategory = {this.updateCategory} />
+                    <BookShelfSection title="Read" books={this.state.read} bookShelf={"read"} updateCategory = {this.updateCategory} />
                 </div>
             </div>
         )

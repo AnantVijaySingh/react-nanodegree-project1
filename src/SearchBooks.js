@@ -7,7 +7,8 @@ class SearchBooks extends Component {
     state = {
         query:'',
         searchedBooks:[],
-        books:[]
+        books:[],
+        resultsFound: true,
     };
 
     // Create an array to get the state of books that already have a shelf
@@ -46,11 +47,18 @@ class SearchBooks extends Component {
                 });
 
                 this.setState(() => ({
-                    searchedBooks: processedBookArray
+                    searchedBooks: processedBookArray,
+                    resultsFound: true
+                }))
+            } else if (booksData.error === 'empty query') {
+                this.setState(() => ({
+                    searchedBooks: [],
+                    resultsFound: false
                 }))
             } else {
                 this.setState(() => ({
-                    searchedBooks: []
+                    searchedBooks: [],
+                    resultsFound: true
                 }))
             }
             });
@@ -66,7 +74,7 @@ class SearchBooks extends Component {
     };
 
     render() {
-        const {searchedBooks} = this.state;
+        const {searchedBooks, resultsFound} = this.state;
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -86,7 +94,11 @@ class SearchBooks extends Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {
-                            typeof searchedBooks !== 'undefined' && (
+                            resultsFound === false && (
+                                <p style={{textAlign:'center', padding:'50px'}}>No Results Found</p>
+                            )
+                        }
+                        {   typeof searchedBooks !== 'undefined' && (
                                 searchedBooks.map((book) => (
                                     <li key={book.id}>
                                         <Book bookData = {book} bookShelf={book.shelf} updateCategory = {this.updateCategory} />

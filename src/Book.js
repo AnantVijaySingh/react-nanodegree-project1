@@ -13,11 +13,12 @@ class Book extends Component {
     render() {
 
         const {bookData,updateCategory,bookShelf} = this.props;
+        const imageURL = bookData.hasOwnProperty('imageLinks') ? (bookData.imageLinks.thumbnail) : ( '' );
 
         return (
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{width:'128px', height:'193px', backgroundSize:'cover' , backgroundRepeat: 'no-repeat' ,backgroundImage:`url(${bookData.imageLinks.thumbnail})`}}></div>
+                    <div className="book-cover" style={{width:'128px', height:'193px', backgroundSize:'cover' , backgroundRepeat: 'no-repeat' ,backgroundImage:`url(${imageURL})`}}></div>
                     <div className="book-shelf-changer">
                         <select
                             name="category-selector"
